@@ -1,0 +1,533 @@
+{
+  "entities": {
+    "Teacher": {
+      "title": "Teacher",
+      "description": "Data profil dan informasi kepegawaian guru",
+      "type": "object",
+      "properties": {
+        "nip": {
+          "type": "string",
+          "description": "Nomor Induk Pegawai",
+          "maxLength": 30
+        },
+        "name": {
+          "type": "string",
+          "description": "Nama lengkap beserta gelar guru",
+          "maxLength": 100
+        },
+        "phone": {
+          "type": "string",
+          "description": "Nomor WhatsApp aktif guru",
+          "maxLength": 20
+        },
+        "email": {
+          "type": "string",
+          "description": "Email guru",
+          "maxLength": 100
+        },
+        "subject": {
+          "type": "string",
+          "description": "Mata pelajaran utama yang diampu",
+          "maxLength": 100
+        },
+        "employmentStatus": {
+          "type": "string",
+          "description": "Status kepegawaian (PNS, PPPK, GTT, Honorer, Tetap)",
+          "maxLength": 30
+        },
+        "targetJp": {
+          "type": "number",
+          "description": "Target beban Jam Pelajaran per minggu (misal 24 JP)"
+        },
+        "active": {
+          "type": "boolean",
+          "description": "Status keaktifan guru"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Waktu pembuatan record"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Waktu pembaruan record"
+        }
+      },
+      "required": ["nip", "name", "phone", "subject", "employmentStatus", "targetJp", "active"]
+    },
+    "Schedule": {
+      "title": "Schedule",
+      "description": "Jadwal dan alokasi jam pelajaran mengajar",
+      "type": "object",
+      "properties": {
+        "teacherId": {
+          "type": "string",
+          "description": "ID Guru pengampu",
+          "maxLength": 64
+        },
+        "teacherName": {
+          "type": "string",
+          "description": "Nama Guru pengampu",
+          "maxLength": 100
+        },
+        "subject": {
+          "type": "string",
+          "description": "Mata pelajaran",
+          "maxLength": 100
+        },
+        "classGrade": {
+          "type": "string",
+          "description": "Kelas rombel yang diajar (contoh: X-A, XI-IPA 1)",
+          "maxLength": 50
+        },
+        "day": {
+          "type": "string",
+          "description": "Hari mengajar (Senin, Selasa, Rabu, Kamis, Jumat, Sabtu)",
+          "maxLength": 20
+        },
+        "periodStart": {
+          "type": "number",
+          "description": "Jam ke awal (1-10)"
+        },
+        "periodEnd": {
+          "type": "number",
+          "description": "Jam ke akhir (1-10)"
+        },
+        "totalJp": {
+          "type": "number",
+          "description": "Jumlah durasi Jam Pelajaran"
+        },
+        "room": {
+          "type": "string",
+          "description": "Ruang kelas atau laboratorium",
+          "maxLength": 50
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Waktu pembuatan"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Waktu pembaruan"
+        }
+      },
+      "required": ["teacherId", "subject", "classGrade", "day", "periodStart", "periodEnd", "totalJp"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Catatan presensi dan kehadiran harian guru",
+      "type": "object",
+      "properties": {
+        "teacherId": {
+          "type": "string",
+          "description": "ID Guru",
+          "maxLength": 64
+        },
+        "teacherName": {
+          "type": "string",
+          "description": "Nama Guru",
+          "maxLength": 100
+        },
+        "date": {
+          "type": "string",
+          "description": "Format tanggal YYYY-MM-DD",
+          "maxLength": 10
+        },
+        "status": {
+          "type": "string",
+          "description": "Status kehadiran (Hadir, Izin, Sakit, Alpa, Dinas Luar)",
+          "maxLength": 20
+        },
+        "checkInTime": {
+          "type": "string",
+          "description": "Jam masuk presensi (HH:mm)",
+          "maxLength": 10
+        },
+        "checkOutTime": {
+          "type": "string",
+          "description": "Jam pulang presensi (HH:mm)",
+          "maxLength": 10
+        },
+        "notes": {
+          "type": "string",
+          "description": "Keterangan atau alasan ketidakhadiran",
+          "maxLength": 255
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Waktu pembuatan"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Waktu pembaruan"
+        }
+      },
+      "required": ["teacherId", "date", "status"]
+    },
+    "WarningLetter": {
+      "title": "WarningLetter",
+      "description": "Surat pemanggilan resmi untuk guru dengan kehadiran <90%",
+      "type": "object",
+      "properties": {
+        "letterNumber": {
+          "type": "string",
+          "description": "Nomor surat resmi instansi",
+          "maxLength": 100
+        },
+        "teacherId": {
+          "type": "string",
+          "description": "ID Guru penerima",
+          "maxLength": 64
+        },
+        "teacherName": {
+          "type": "string",
+          "description": "Nama Guru",
+          "maxLength": 100
+        },
+        "teacherNip": {
+          "type": "string",
+          "description": "NIP Guru",
+          "maxLength": 30
+        },
+        "attendanceRate": {
+          "type": "number",
+          "description": "Persentase kehadiran tercatat (%)"
+        },
+        "totalAbsence": {
+          "type": "number",
+          "description": "Total hari alpa/tanpa keterangan"
+        },
+        "periodMonth": {
+          "type": "string",
+          "description": "Periode bulan evaluasi",
+          "maxLength": 30
+        },
+        "meetingDate": {
+          "type": "string",
+          "description": "Tanggal pemanggilan (YYYY-MM-DD)",
+          "maxLength": 10
+        },
+        "meetingTime": {
+          "type": "string",
+          "description": "Waktu pemanggilan (HH:mm)",
+          "maxLength": 10
+        },
+        "meetingPlace": {
+          "type": "string",
+          "description": "Tempat pertemuan (e.g. Ruang Kepala Sekolah)",
+          "maxLength": 100
+        },
+        "letterType": {
+          "type": "string",
+          "description": "Tipe surat (Pemanggilan Klarifikasi, Peringatan SP1, SP2)",
+          "maxLength": 50
+        },
+        "status": {
+          "type": "string",
+          "description": "Status surat (Draft, Diterbitkan, Terkirim, Selesai)",
+          "maxLength": 30
+        },
+        "issuedDate": {
+          "type": "string",
+          "description": "Tanggal penerbitan surat (YYYY-MM-DD)",
+          "maxLength": 10
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Waktu pembuatan"
+        }
+      },
+      "required": ["letterNumber", "teacherId", "attendanceRate", "letterType", "meetingDate"]
+    },
+    "NotificationLog": {
+      "title": "NotificationLog",
+      "description": "Log riwayat pengiriman notifikasi pesan WhatsApp",
+      "type": "object",
+      "properties": {
+        "teacherId": {
+          "type": "string",
+          "description": "ID Guru penerima",
+          "maxLength": 64
+        },
+        "teacherName": {
+          "type": "string",
+          "description": "Nama Guru",
+          "maxLength": 100
+        },
+        "phone": {
+          "type": "string",
+          "description": "Nomor WhatsApp tujuan",
+          "maxLength": 20
+        },
+        "type": {
+          "type": "string",
+          "description": "Jenis notifikasi (warning_attendance, daily_schedule, monthly_recap, general)",
+          "maxLength": 40
+        },
+        "message": {
+          "type": "string",
+          "description": "Isi pesan WhatsApp",
+          "maxLength": 2000
+        },
+        "status": {
+          "type": "string",
+          "description": "Status pengiriman (sent, queued, pending)",
+          "maxLength": 20
+        },
+        "sentAt": {
+          "type": "string",
+          "description": "Waktu pengiriman ISO string",
+          "maxLength": 40
+        }
+      },
+      "required": ["teacherId", "phone", "type", "message", "status"]
+    },
+    "SchoolProfile": {
+      "title": "SchoolProfile",
+      "description": "Konfigurasi instansi sekolah dan kop surat resmi",
+      "type": "object",
+      "properties": {
+        "schoolName": {
+          "type": "string",
+          "description": "Nama resmi sekolah",
+          "maxLength": 150
+        },
+        "npsn": {
+          "type": "string",
+          "description": "Nomor Pokok Sekolah Nasional",
+          "maxLength": 30
+        },
+        "address": {
+          "type": "string",
+          "description": "Alamat lengkap sekolah",
+          "maxLength": 255
+        },
+        "principalName": {
+          "type": "string",
+          "description": "Nama Kepala Sekolah",
+          "maxLength": 100
+        },
+        "principalNip": {
+          "type": "string",
+          "description": "NIP Kepala Sekolah",
+          "maxLength": 30
+        },
+        "academicYear": {
+          "type": "string",
+          "description": "Tahun Pelajaran (e.g. 2026/2027)",
+          "maxLength": 20
+        },
+        "semester": {
+          "type": "string",
+          "description": "Semester (Ganjil / Genap)",
+          "maxLength": 10
+        },
+        "phone": {
+          "type": "string",
+          "description": "Nomor telepon sekolah",
+          "maxLength": 30
+        },
+        "email": {
+          "type": "string",
+          "description": "Email resmi sekolah",
+          "maxLength": 100
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Waktu pembaruan profil"
+        }
+      },
+      "required": ["schoolName", "principalName", "academicYear", "semester"]
+    },
+    "CurriculumDocument": {
+      "title": "CurriculumDocument",
+      "description": "Dokumen Induk Kurikulum dan Perencanaan Kurikulum (PDF/Berkas)",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Judul dokumen",
+          "maxLength": 200
+        },
+        "section": {
+          "type": "string",
+          "description": "Kategori induk: master atau plan",
+          "maxLength": 20
+        },
+        "subcategory": {
+          "type": "string",
+          "description": "Submenu: dokumen_kurikulum, kalender_akademik, data_rombel, struktur_organisasi, prota, promes, atp",
+          "maxLength": 50
+        },
+        "academicYear": {
+          "type": "string",
+          "description": "Tahun Pelajaran",
+          "maxLength": 30
+        },
+        "fileName": {
+          "type": "string",
+          "description": "Nama file berkas",
+          "maxLength": 255
+        },
+        "fileType": {
+          "type": "string",
+          "description": "MIME type berkas (e.g. application/pdf)",
+          "maxLength": 100
+        },
+        "uploadedBy": {
+          "type": "string",
+          "description": "Nama pengunggah / pengakses",
+          "maxLength": 100
+        },
+        "uploadedAt": {
+          "type": "string",
+          "description": "Waktu unggah dokumen"
+        }
+      },
+      "required": ["title", "section", "subcategory", "fileName", "uploadedBy", "uploadedAt"]
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "Catatan log riwayat aktivitas seluruh pengakses di aplikasi",
+      "type": "object",
+      "properties": {
+        "actorName": {
+          "type": "string",
+          "description": "Nama Pengakses yang melakukan aktivitas",
+          "maxLength": 100
+        },
+        "actionType": {
+          "type": "string",
+          "description": "Kategori aksi",
+          "maxLength": 50
+        },
+        "description": {
+          "type": "string",
+          "description": "Penjelasan detail aktivitas",
+          "maxLength": 500
+        },
+        "status": {
+          "type": "string",
+          "description": "Status hasil aksi (Sukses, Gagal, Peringatan)",
+          "maxLength": 30
+        },
+        "timestamp": {
+          "type": "string",
+          "description": "Waktu pencatatan log"
+        }
+      },
+      "required": ["actorName", "actionType", "description", "status", "timestamp"]
+    },
+    "TeacherAdminDocument": {
+      "title": "TeacherAdminDocument",
+      "description": "Dokumen Administrasi Guru (SK Pembagian Tugas dan Jadwal Pelajaran PDF)",
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Jenis dokumen: sk_tugas atau jadwal_pelajaran",
+          "maxLength": 50
+        },
+        "teacherName": {
+          "type": "string",
+          "description": "Nama Guru",
+          "maxLength": 100
+        },
+        "subject": {
+          "type": "string",
+          "description": "Mata Pelajaran",
+          "maxLength": 100
+        },
+        "classGrade": {
+          "type": "string",
+          "description": "Kelas yang diampu",
+          "maxLength": 50
+        },
+        "skDate": {
+          "type": "string",
+          "description": "Tanggal Terbit SK",
+          "maxLength": 20
+        },
+        "equivalency": {
+          "type": "string",
+          "description": "Ekuivalensi jam/tugas",
+          "maxLength": 100
+        },
+        "description": {
+          "type": "string",
+          "description": "Keterangan",
+          "maxLength": 500
+        },
+        "fileName": {
+          "type": "string",
+          "description": "Nama berkas PDF",
+          "maxLength": 255
+        }
+      },
+      "required": ["type"]
+    },
+    "AcademicSupervisionItem": {
+      "title": "AcademicSupervisionItem",
+      "description": "Item Supervisi Akademik (Program, Instrumen, Jadwal, Laporan, Tindak Lanjut)",
+      "type": "object",
+      "properties": {
+        "category": {
+          "type": "string",
+          "description": "Submenu kategori supervisi",
+          "maxLength": 50
+        },
+        "title": {
+          "type": "string",
+          "description": "Judul atau nama entitas supervisi",
+          "maxLength": 200
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Waktu dibuat"
+        }
+      },
+      "required": ["category", "title"]
+    }
+  },
+  "firestore": {
+    "/teachers/{teacherId}": {
+      "schema": "Teacher",
+      "description": "Koleksi data master guru dan jam mengajar"
+    },
+    "/schedules/{scheduleId}": {
+      "schema": "Schedule",
+      "description": "Koleksi distribusi jadwal dan alokasi JP"
+    },
+    "/attendance/{attendanceId}": {
+      "schema": "Attendance",
+      "description": "Koleksi catatan absensi dan kehadiran guru"
+    },
+    "/warningLetters/{letterId}": {
+      "schema": "WarningLetter",
+      "description": "Koleksi dokumen surat pemanggilan dan peringatan"
+    },
+    "/notifications/{notificationId}": {
+      "schema": "NotificationLog",
+      "description": "Koleksi riwayat notifikasi WhatsApp"
+    },
+    "/schoolProfile/{profileId}": {
+      "schema": "SchoolProfile",
+      "description": "Koleksi konfigurasi data sekolah dan kop surat"
+    },
+    "/curriculumDocs/{docId}": {
+      "schema": "CurriculumDocument",
+      "description": "Koleksi berkas dan arsip dokumen kurikulum sekolah"
+    },
+    "/activityLogs/{logId}": {
+      "schema": "ActivityLog",
+      "description": "Koleksi riwayat log aktivitas pengakses sistem"
+    },
+    "/teacherAdminDocs/{docId}": {
+      "schema": "TeacherAdminDocument",
+      "description": "Koleksi administrasi guru dan SK pembagian tugas"
+    },
+    "/academicSupervision/{docId}": {
+      "schema": "AcademicSupervisionItem",
+      "description": "Koleksi program, instrumen, jadwal, laporan dan tindak lanjut supervisi akademik"
+    }
+  }
+}

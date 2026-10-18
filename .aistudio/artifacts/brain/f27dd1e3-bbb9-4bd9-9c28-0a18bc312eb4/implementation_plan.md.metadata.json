@@ -1,0 +1,6 @@
+{
+  "summary": "Rencana komprehensif peningkatan UI/UX responsif (sidebar drawer hamburger untuk smartphone/tablet), perbaikan fungsionalitas hapus data di seluruh modul, validasi passkey ketat dari tombol pintasan Dashboard tanpa membocorkan info passkey, serta integrasi penuh menu Administrasi Guru dan Supervisi Akademik dengan dukungan berkas PDF dan skala skor 1-4.",
+  "updatedAt": "2026-10-17T06:13:37.762555594Z",
+  "requestFeedback": true,
+  "userFacing": true
+}

@@ -1,0 +1,135 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    // Connection testing rule
+    match /test/{testId} {
+      allow read, write: if true;
+    }
+
+    // Master teachers collection
+    match /teachers/{teacherId} {
+      allow read: if true;
+      allow create, update: if isValidId(teacherId) &&
+        incoming().nip is string && incoming().nip.size() <= 30 &&
+        incoming().name is string && incoming().name.size() <= 100 &&
+        incoming().phone is string && incoming().phone.size() <= 20;
+      allow delete: if isValidId(teacherId);
+    }
+
+    // Schedules collection
+    match /schedules/{scheduleId} {
+      allow read: if true;
+      allow create, update: if isValidId(scheduleId) &&
+        incoming().teacherId is string &&
+        incoming().subject is string &&
+        incoming().classGrade is string;
+      allow delete: if isValidId(scheduleId);
+    }
+
+    // Attendance collection
+    match /attendance/{attendanceId} {
+      allow read: if true;
+      allow create, update: if isValidId(attendanceId) &&
+        incoming().teacherId is string &&
+        incoming().date is string &&
+        incoming().status is string;
+      allow delete: if isValidId(attendanceId);
+    }
+
+    // Warning letters collection
+    match /warningLetters/{letterId} {
+      allow read: if true;
+      allow create, update: if isValidId(letterId) &&
+        incoming().teacherId is string &&
+        incoming().letterNumber is string;
+      allow delete: if isValidId(letterId);
+    }
+
+    // Notification logs collection
+    match /notifications/{notificationId} {
+      allow read: if true;
+      allow create, update: if isValidId(notificationId) &&
+        incoming().teacherId is string &&
+        incoming().phone is string;
+      allow delete: if isValidId(notificationId);
+    }
+
+    // School profile collection
+    match /schoolProfile/{profileId} {
+      allow read: if true;
+      allow create, update, delete: if isValidId(profileId);
+    }
+
+    // Evaluasi dan Monitoring collections
+    match /evalMidSemester/{docId} {
+      allow read, write, create, update, delete: if isValidId(docId);
+    }
+    match /evalFinalSemester/{docId} {
+      allow read, write, create, update, delete: if isValidId(docId);
+    }
+    match /evalMeetings/{docId} {
+      allow read, write, create, update, delete: if isValidId(docId);
+    }
+    match /evalQualityReports/{docId} {
+      allow read, write, create, update, delete: if isValidId(docId);
+    }
+
+    // Curriculum documents collection
+    match /curriculumDocs/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isValidId(docId);
+    }
+
+    // Activity logs collection
+    match /activityLogs/{logId} {
+      allow read: if true;
+      allow create, update, delete: if isValidId(logId);
+    }
+
+    // Teacher administration collection (SK Pembagian Tugas, Jadwal Pelajaran PDF)
+    match /teacherAdminDocs/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isValidId(docId);
+    }
+
+    // Academic supervision collections (Program, Instrumen, Jadwal, Laporan, Tindak Lanjut)
+    match /academicSupervision/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isValidId(docId);
+    }
+    match /supervisionPrograms/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isValidId(docId);
+    }
+    match /supervisionInstruments/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isValidId(docId);
+    }
+    match /supervisionSchedules/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isValidId(docId);
+    }
+    match /supervisionReports/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isValidId(docId);
+    }
+    match /supervisionFollowUps/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isValidId(docId);
+    }
+
+    // Global default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

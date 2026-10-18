@@ -1,0 +1,6 @@
+{
+  "name": "Sistem Manajemen Guru & Presensi",
+  "description": "Aplikasi manajemen data guru, distribusi JP, jadwal mengajar, rekapitulasi kehadiran real-time, surat pemanggilan otomatis (<90%), notifikasi WhatsApp, dan laporan bulanan dengan sinkronisasi Firebase.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
